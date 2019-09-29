@@ -1,4 +1,4 @@
-package #{#packageName};
+package #{#mainPackage}.bean;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;

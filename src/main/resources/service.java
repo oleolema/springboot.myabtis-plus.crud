@@ -1,9 +1,9 @@
-package #{#packageName};
+package #{#mainPackage}.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.yqh.mybaitsplus.bean.#{#beanName};
+import #{#mainPackage}.bean.#{#beanName};
 
 public interface #{#className} extends IService<#{#beanName}> {
     /**

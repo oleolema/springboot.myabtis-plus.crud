@@ -25,6 +25,8 @@ spring:
  
  5. 生成结果  
  
+   生成结果包含了bean，mapper，service，controller  其中controller为restful风格的增删改查
+ 
  ![](https://raw.githubusercontent.com/oleolema/mybatis-plus-generator/img/QQ截图20190928161941.png)
  
  ## 注意1，需要生成的项目必须依赖springboot，mybatis-plus，lombok

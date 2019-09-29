@@ -58,16 +58,6 @@ public class ProjectProperties {
      */
     private boolean forceCreate;
 
-    private Resource beanTemplate = new ClassPathResource("bean.java");
-
-    private Resource mapperTemplate = new ClassPathResource("mapper.java");
-
-    private Resource controllerTemplate = new ClassPathResource("controller.java");
-
-    private Resource serviceTemplate = new ClassPathResource("service.java");
-
-    private Resource serviceImplTemplate = new ClassPathResource("serviceImpl.java");
-
     private String packageName;
 
     @PostConstruct

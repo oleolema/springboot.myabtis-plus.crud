@@ -1,7 +1,7 @@
-package #{#packageName};
+package #{#mainPackage}.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.yqh.mybaitsplus.bean.#{#beanName};
+import #{#mainPackage}.bean.#{#beanName};
 
 public interface #{#className} extends BaseMapper<#{#beanName}> {
 

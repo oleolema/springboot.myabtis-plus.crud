@@ -1,9 +1,9 @@
-package com.yqh.mybaitsplus.controller;
+package #{#mainPackage}.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.yqh.mybaitsplus.bean.#{#beanName};
-import com.yqh.mybaitsplus.service.#{#beanName}Service;
+import #{#mainPackage}.bean.#{#beanName};
+import #{#mainPackage}.service.#{#beanName}Service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

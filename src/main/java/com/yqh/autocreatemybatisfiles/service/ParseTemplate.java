@@ -8,8 +8,8 @@
  */
 package com.yqh.autocreatemybatisfiles.service;
 
-import com.yqh.autocreatemybatisfiles.bean.PackageName;
 import com.yqh.autocreatemybatisfiles.bean.ProjectProperties;
+import com.yqh.autocreatemybatisfiles.bean.TableDesc;
 import com.yqh.autocreatemybatisfiles.util.MyUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +22,7 @@ import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -38,8 +39,6 @@ public abstract class ParseTemplate {
     @Autowired
     protected ProjectProperties projectProperties;
 
-    @Autowired
-    protected PackageName packageName;
 
 
     protected Expression expression;
@@ -54,7 +53,7 @@ public abstract class ParseTemplate {
 
     protected abstract Resource getResource();
 
-    protected String parseTemplate(Map<String, Object> variable){
+    protected String parseTemplate(TableDesc tableDesc, Map<String, Object> variable) {
         if (this.expression == null) {
             this.expression = getExpression(getResource());
         }
@@ -68,6 +67,19 @@ public abstract class ParseTemplate {
         log.debug("输出文件" + message);
         return message;
     }
+
+    public String parseTemplate(TableDesc tableDesc) {
+        Map<String, Object> map = new HashMap<>(12);
+        String className = MyUtil.toClassName(tableDesc.getTableName());
+        map.put("beanName", className);
+        map.put("mainPackage", projectProperties.getPackageName());
+        map.put("beanNameCamel", MyUtil.toCamel(tableDesc.getTableName()));
+        addVariables(tableDesc, map);
+        return parseTemplate(tableDesc, map);
+    }
+
+
+    public abstract void addVariables(TableDesc tableDesc, Map<String, Object> map);
 
 
 }

@@ -11,6 +11,7 @@ package com.yqh.autocreatemybatisfiles.service;
 import com.yqh.autocreatemybatisfiles.bean.TableDesc;
 import com.yqh.autocreatemybatisfiles.util.MyUtil;
 import com.yqh.autocreatemybatisfiles.util.TypeUtil;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
@@ -27,6 +28,11 @@ import java.util.Map;
 @Component
 public class ParseBeanTemplate extends ParseTemplate {
 
+    public static final String PACKAGE_NAME = "bean";
+
+    public static final String CLASS_SUFFIX = "";
+
+    public static Resource templateResource = new ClassPathResource("bean.java");
 
     /**
      * bean属性的权限
@@ -36,7 +42,7 @@ public class ParseBeanTemplate extends ParseTemplate {
 
     @Override
     protected Resource getResource() {
-        return projectProperties.getBeanTemplate();
+        return templateResource;
     }
 
     private String parseBeanField(TableDesc.Desc desc) {
@@ -57,14 +63,13 @@ public class ParseBeanTemplate extends ParseTemplate {
         return allField.toString();
     }
 
-    public String parseTemplate(TableDesc tableDesc) {
+
+    @Override
+    public void addVariables(TableDesc tableDesc, Map<String, Object> map) {
         String className = MyUtil.toClassName(tableDesc.getTableName());
         String fields = parseBeanAllField(tableDesc);
-        Map<String, Object> map = new HashMap<>(6);
-        map.put("packageName", projectProperties.getPackageName() + "." + packageName.bean);
         map.put("className", className);
         map.put("field", fields);
-        return parseTemplate(map);
     }
 
 

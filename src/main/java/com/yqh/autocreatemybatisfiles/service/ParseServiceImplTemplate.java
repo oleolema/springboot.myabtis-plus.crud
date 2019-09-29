@@ -10,6 +10,7 @@ package com.yqh.autocreatemybatisfiles.service;
 
 import com.yqh.autocreatemybatisfiles.bean.TableDesc;
 import com.yqh.autocreatemybatisfiles.util.MyUtil;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
@@ -26,19 +27,20 @@ import java.util.Map;
 @Component
 public class ParseServiceImplTemplate extends ParseTemplate {
 
+    public static final String PACKAGE_NAME = "service.impl";
 
+    public static final String CLASS_SUFFIX = "ServiceImpl";
+
+    public static Resource templateResource = new ClassPathResource("serviceImpl.java");
     @Override
     protected Resource getResource() {
-        return projectProperties.getServiceImplTemplate();
+        return templateResource;
     }
 
-    public String parseTemplate(TableDesc tableDesc) {
+    @Override
+    public void addVariables(TableDesc tableDesc, Map<String, Object> map) {
         String className = MyUtil.toClassName(tableDesc.getTableName());
-        Map<String, Object> map = new HashMap<>(6);
-        map.put("packageName", projectProperties.getPackageName() + "." + packageName.serviceImpl);
-        map.put("className", className + "ServiceImpl");
-        map.put("beanName", className);
-        return parseTemplate(map);
+        map.put("className", className + CLASS_SUFFIX);
     }
 
 

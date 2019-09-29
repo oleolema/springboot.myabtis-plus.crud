@@ -102,7 +102,7 @@ public class AutoCreateMybatisFilesApplicationTests {
     @Test
     public void test7() throws IOException {
 
-        BufferedInputStream in = new BufferedInputStream(projectProperties.getBeanTemplate().getInputStream());
+        BufferedInputStream in = new BufferedInputStream(ParseBeanTemplate.templateResource.getInputStream());
         StringBuilder sb = new StringBuilder();
         byte[] b = new byte[1024];
         int len = -1;

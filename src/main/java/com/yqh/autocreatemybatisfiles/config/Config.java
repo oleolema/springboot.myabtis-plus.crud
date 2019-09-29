@@ -8,7 +8,6 @@
  */
 package com.yqh.autocreatemybatisfiles.config;
 
-import com.yqh.autocreatemybatisfiles.bean.PackageName;
 import com.yqh.autocreatemybatisfiles.bean.ProjectProperties;
 import com.yqh.autocreatemybatisfiles.service.InitDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +26,7 @@ import javax.sql.DataSource;
  * @since 1.0.0
  */
 @Configuration
-@EnableConfigurationProperties({ProjectProperties.class, PackageName.class})
+@EnableConfigurationProperties({ProjectProperties.class})
 public class Config {
 
     @Autowired
@@ -44,8 +43,6 @@ public class Config {
         dataSource.setPassword(projectProperties.getPassword());
         return dataSource;
     }
-
-
 
 
 }

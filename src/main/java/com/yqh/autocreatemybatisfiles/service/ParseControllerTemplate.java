@@ -10,6 +10,7 @@ package com.yqh.autocreatemybatisfiles.service;
 
 import com.yqh.autocreatemybatisfiles.bean.TableDesc;
 import com.yqh.autocreatemybatisfiles.util.MyUtil;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
@@ -26,21 +27,25 @@ import java.util.Map;
 @Component
 public class ParseControllerTemplate extends ParseTemplate {
 
+    public static final String PACKAGE_NAME = "controller";
+
+    public static final String CLASS_SUFFIX = "Controller";
+
+    public static Resource templateResource = new ClassPathResource("controller.java");
 
     @Override
     protected Resource getResource() {
-        return projectProperties.getControllerTemplate();
+        return templateResource;
     }
 
-    public String parseTemplate(TableDesc tableDesc) {
+
+
+    @Override
+    public void addVariables(TableDesc tableDesc, Map<String, Object> map) {
         String className = MyUtil.toClassName(tableDesc.getTableName());
-        Map<String, Object> map = new HashMap<>(6);
-        map.put("packageName", projectProperties.getPackageName() + "." + packageName.controller);
-        map.put("className", className + "Controller");
-        map.put("beanName", className);
-        map.put("beanNameCamel", MyUtil.toCamel(tableDesc.getTableName()));
-        return parseTemplate(map);
+        map.put("className", className + CLASS_SUFFIX);
     }
+
 
 
 }

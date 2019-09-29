@@ -8,7 +8,6 @@
  */
 package com.yqh.autocreatemybatisfiles.service;
 
-import com.yqh.autocreatemybatisfiles.bean.PackageName;
 import com.yqh.autocreatemybatisfiles.bean.ProjectProperties;
 import com.yqh.autocreatemybatisfiles.bean.TableDesc;
 import com.yqh.autocreatemybatisfiles.util.MyUtil;
@@ -52,8 +51,6 @@ public class AutoCreateFiles {
     @Autowired
     private ParseControllerTemplate parseControllerTemplate;
 
-    @Autowired
-    private PackageName packageName;
 
     public void creteAll() throws IOException {
         createBeans();
@@ -64,23 +61,23 @@ public class AutoCreateFiles {
     }
 
     public void createBeans() throws IOException {
-        createClasses(packageName.bean);
+        createClasses(ParseBeanTemplate.PACKAGE_NAME);
     }
 
     public void createService() throws IOException {
-        createClasses(packageName.service);
+        createClasses(ParseServiceTemplate.PACKAGE_NAME);
     }
 
     public void createMapper() throws IOException {
-        createClasses(packageName.mapper);
+        createClasses(ParseMapperTemplate.PACKAGE_NAME);
     }
 
     public void createServiceImpl() throws IOException {
-        createClasses(packageName.serviceImpl);
+        createClasses(ParseServiceImplTemplate.PACKAGE_NAME);
     }
 
     public void createController() throws IOException {
-        createClasses(packageName.controller);
+        createClasses(ParseControllerTemplate.PACKAGE_NAME);
     }
 
     public void createClasses(String packageName) throws IOException {
@@ -92,16 +89,15 @@ public class AutoCreateFiles {
 
     private void createClass(File pack, TableDesc tableDesc) throws IOException {
         String className = MyUtil.toClassName(tableDesc.getTableName());
-        File claFile = null;
-        if (packageName.bean.equals(pack.getName())) {
+        if (ParseBeanTemplate.PACKAGE_NAME.equals(pack.getName())) {
             writeFile(pack, className + ".java", parseBeanTemplate.parseTemplate(tableDesc));
-        } else if (packageName.mapper.equals(pack.getName())) {
+        } else if (ParseMapperTemplate.PACKAGE_NAME.equals(pack.getName())) {
             writeFile(pack, className + "Mapper.java", parseMapperTemplate.parseTemplate(tableDesc));
-        } else if (packageName.service.equals(pack.getName())) {
+        } else if (ParseServiceTemplate.PACKAGE_NAME.equals(pack.getName())) {
             writeFile(pack, className + "Service.java", parseServiceTemplate.parseTemplate(tableDesc));
-        } else if (packageName.service.equals(pack.getParentFile().getName()) || "impl".equals(pack.getName())) {
+        } else if (ParseServiceImplTemplate.PACKAGE_NAME.equals(pack.getParentFile().getName() + "." + pack.getName())) {
             writeFile(pack, className + "ServiceImpl.java", parseServiceImplTemplate.parseTemplate(tableDesc));
-        } else if (packageName.controller.equals(pack.getName())) {
+        } else if (ParseControllerTemplate.PACKAGE_NAME.equals(pack.getName())) {
             writeFile(pack, className + "Controller.java", parseControllerTemplate.parseTemplate(tableDesc));
         } else {
             throw new RuntimeException("不支持的类型" + pack.getName());
