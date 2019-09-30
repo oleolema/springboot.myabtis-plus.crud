@@ -23,6 +23,7 @@ import org.springframework.expression.spel.support.StandardEvaluationContext;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 /**
@@ -39,7 +40,7 @@ public abstract class ParseTemplate {
     @Autowired
     protected ProjectProperties projectProperties;
 
-
+    protected HashSet<String> imports = new HashSet<>(16);
 
     protected Expression expression;
 
@@ -49,6 +50,15 @@ public abstract class ParseTemplate {
         ExpressionParser parser = new SpelExpressionParser();
         return parser.parseExpression(s, new TemplateParserContext());
 
+    }
+
+
+    protected String importsToString() {
+        StringBuilder sb = new StringBuilder();
+        for (String anImport : imports) {
+            sb.append("import ").append(anImport).append(";").append("\n");
+        }
+        return sb.toString();
     }
 
     protected abstract Resource getResource();
@@ -75,6 +85,8 @@ public abstract class ParseTemplate {
         map.put("mainPackage", projectProperties.getPackageName());
         map.put("beanNameCamel", MyUtil.toCamel(tableDesc.getTableName()));
         addVariables(tableDesc, map);
+        map.put("imports", importsToString());
+        imports.clear();
         return parseTemplate(tableDesc, map);
     }
 

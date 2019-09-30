@@ -11,11 +11,13 @@ package com.yqh.autocreatemybatisfiles.service;
 import com.yqh.autocreatemybatisfiles.bean.TableDesc;
 import com.yqh.autocreatemybatisfiles.util.MyUtil;
 import com.yqh.autocreatemybatisfiles.util.TypeUtil;
+import org.springframework.context.annotation.Scope;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 /**
@@ -34,6 +36,7 @@ public class ParseBeanTemplate extends ParseTemplate {
 
     public static Resource templateResource = new ClassPathResource("bean.java");
 
+
     /**
      * bean属性的权限
      */
@@ -45,14 +48,27 @@ public class ParseBeanTemplate extends ParseTemplate {
         return templateResource;
     }
 
+
+    private String addAnnotation(TableDesc.Desc desc) {
+        String annotation = "";
+        //主键
+        if (desc.getKey().contains("PRI")) {
+            annotation += "@TableId";
+            imports.add("com.baomidou.mybatisplus.annotation.TableId");
+            //自增
+            if (desc.getExtra().contains("auto_increment")) {
+                annotation += "(type = IdType.AUTO)";
+                imports.add("com.baomidou.mybatisplus.annotation.IdType");
+            }
+        }
+        return annotation.isEmpty() ? "" : "\t" + annotation + "\n";
+    }
+
     private String parseBeanField(TableDesc.Desc desc) {
         String fieldName = MyUtil.toCamel(desc.getField());
         String type = TypeUtil.toType(desc.getType());
-        String tableId = "";
-        if (desc.getKey().contains("PRI")) {
-            tableId = "\t@TableId\n";
-        }
-        return tableId + "\t" + PERMISSION + " " + type + " " + fieldName + ";\n\n";
+        String annotation = addAnnotation(desc);
+        return annotation + "\t" + PERMISSION + " " + type + " " + fieldName + ";\n\n";
     }
 
     private String parseBeanAllField(TableDesc tableDesc) {
@@ -69,7 +85,7 @@ public class ParseBeanTemplate extends ParseTemplate {
         String className = MyUtil.toClassName(tableDesc.getTableName());
         String fields = parseBeanAllField(tableDesc);
         map.put("className", className);
-        map.put("field", fields);
+        map.put("fields", fields);
     }
 
 
