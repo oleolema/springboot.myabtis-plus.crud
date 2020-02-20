@@ -33,7 +33,6 @@ public class #{#beanName}Controller {
 
     @PutMapping("/#{#beanNameCamel}")
     public #{#beanName} save(#{#beanName} #{#beanNameCamel}) {
-        log.info(#{#beanNameCamel}.toString());
         if (#{#beanNameCamel}Service.save(#{#beanNameCamel})) {
             return #{#beanNameCamel};
         }

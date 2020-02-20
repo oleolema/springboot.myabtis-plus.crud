@@ -9,10 +9,7 @@
 package com.yqh.autocreatemybatisfiles.util;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 〈〉
@@ -24,6 +21,8 @@ import java.util.Map;
 public class TypeUtil {
     private static Map<String, List<String>> types = new HashMap<>();
 
+    private static Map<String, String> typeImports = new HashMap<>();
+
     static {
         types.put("Integer", Arrays.asList("int"));
         types.put("Double", Arrays.asList("double", "float", "real", "decimal"));
@@ -33,18 +32,26 @@ public class TypeUtil {
         types.put("Boolean", Arrays.asList("bool", "bit(1)"));
     }
 
+    static {
+        typeImports.put("LocalDateTime", "java.time.LocalDateTime");
+    }
+
     /**
      * 将数据库类型转换成java类型
      *
      * @param type
      * @return
      */
-    public static String toType(String type) {
+    public static String toType(String type, HashSet<String> imports) {
         for (Map.Entry<String, List<String>> entry : types.entrySet()) {
             List<String> list = entry.getValue();
             for (String s : list) {
                 if (contains(type, s)) {
-                    return entry.getKey();
+                    String key = entry.getKey();
+                    if (typeImports.containsKey(key)) {
+                        imports.add(typeImports.get(key));
+                    }
+                    return key;
                 }
             }
         }

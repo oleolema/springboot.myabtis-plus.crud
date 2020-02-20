@@ -66,7 +66,7 @@ public class ParseBeanTemplate extends ParseTemplate {
 
     private String parseBeanField(TableDesc.Desc desc) {
         String fieldName = MyUtil.toCamel(desc.getField());
-        String type = TypeUtil.toType(desc.getType());
+        String type = TypeUtil.toType(desc.getType(), imports);
         String annotation = addAnnotation(desc);
         return annotation + "\t" + PERMISSION + " " + type + " " + fieldName + ";\n\n";
     }
