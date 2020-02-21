@@ -8,7 +8,6 @@ import #{#mainPackage}.bean.#{#beanName};
 import #{#mainPackage}.mapper.#{#beanName}Mapper;
 import #{#mainPackage}.service.#{#beanName}Service;
 import org.springframework.stereotype.Service;
-import java.util.List;
 
 @Service
 public class #{#className} extends ServiceImpl<#{#beanName}Mapper, #{#beanName}> implements #{#beanName}Service{
@@ -18,8 +17,4 @@ public class #{#className} extends ServiceImpl<#{#beanName}Mapper, #{#beanName}>
         return baseMapper.selectPage(page, wrapper);
     }
 
-    @Override
-    public List<#{#beanName}> pageList(QueryWrapper<#{#beanName}> wrapper){
-        return baseMapper.selectList(wrapper);
-    }
 }
