@@ -1,3 +1,3 @@
 project:
-  boot-root-path: file:E:\CODE\Java\intelij IDEA workspace\sell\src\main\java\com\nobug\sell
-  force-create: true
+  boot-root-path: file:E:\CODE\Java\intelij IDEA workspace\springboot-high\omall\src\main\java\com\yqh\omall
+  force-create: false

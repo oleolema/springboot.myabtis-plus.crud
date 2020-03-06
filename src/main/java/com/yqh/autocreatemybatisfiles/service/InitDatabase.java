@@ -57,7 +57,7 @@ public class InitDatabase {
         for (String t : tables) {
             TableDesc td = new TableDesc();
             td.setTableName(t);
-            jdbcTemplate.query("desc " + t, (rs, rowNum) -> {
+            jdbcTemplate.query("desc `" + t + "`", (rs, rowNum) -> {
                 //获取所有字段
                 TableDesc.Desc desc = new TableDesc.Desc();
                 desc.setField(rs.getString(rs.findColumn("Field")));
