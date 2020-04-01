@@ -2,7 +2,7 @@
 
 ## 使用方法
  
- 1. [下载生成器](https://github.com/oleolema/mybatis-plus-generator/releases/download/1.0.0/mybaits-plus.zip)，并解压
+ 1. [下载生成器](https://github.com/oleolema/springboot.myabtis-plus.crud/releases)，并解压
  
  2. 修改`application.yml`配置文件中`boot-root-path`为你项目的springboot启动类的路径  
  例如在下面这个项目中，该路径为 `file:E:\CODE\Java\intelij IDEA workspace\springboot-high\mybaits-plus\src\main\java\com\yqh\mybaitsplus`  

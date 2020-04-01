@@ -56,12 +56,12 @@ public class AutoCreateMybatisFilesApplicationTests {
         autoCreateFiles.creteAll();
     }
 
-    @Test
-    public void test8() {
-        Map<String, TableDesc> tableDescMap = initDatabase.getTableDescMap();
-        String s = parseBeanTemplate.parseTemplate(tableDescMap.get("department"));
-        System.out.println(s);
-    }
+//    @Test
+//    public void test8() {
+//        Map<String, TableDesc> tableDescMap = initDatabase.getTableDescMap();
+//        String s = parseBeanTemplate.parseTemplate(tableDescMap.get("department"));
+//        System.out.println(s);
+//    }
 
 
     @Test
@@ -70,13 +70,13 @@ public class AutoCreateMybatisFilesApplicationTests {
         System.out.println(database.getTableDescMap());
     }
 
-    @Test
-    public void test1() {
-        System.out.println(jdbcTemplate);
-        List<Map<String, Object>> maps = jdbcTemplate.queryForList("select * from testDb1.department");
-        System.out.println(maps);
-
-    }
+//    @Test
+//    public void test1() {
+//        System.out.println(jdbcTemplate);
+//        List<Map<String, Object>> maps = jdbcTemplate.queryForList("select * from testDb1.department");
+//        System.out.println(maps);
+//
+//    }
 
 
     @Test
