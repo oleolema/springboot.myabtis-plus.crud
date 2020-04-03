@@ -31,7 +31,21 @@ spring:
  
  
 #### **最后不要忘了在启动类中加入 `@MapperScan` 注解**
-  
+
+#### 分页功能需要配置:
+```java
+    @Bean
+    public PaginationInterceptor paginationInterceptor() {
+        PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
+        // 设置请求的页面大于最大页后操作， true调回到首页，false 继续请求  默认false
+        // paginationInterceptor.setOverflow(false);
+        // 设置最大单页限制数量，默认 500 条，-1 不受限制
+        // paginationInterceptor.setLimit(500);
+        // 开启 count 的 join 优化,只针对部分 left join
+        paginationInterceptor.setCountSqlParser(new JsqlParserCountOptimize(true));
+        return paginationInterceptor;
+    }
+```
  
  
  ## 注意1，需要生成的项目必须依赖springboot，mybatis-plus，lombok, 请确保你的项目已经导入了下面3个依赖
